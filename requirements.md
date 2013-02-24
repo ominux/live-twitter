@@ -1,0 +1,10 @@
+Werkzeug==0.8.3
+argparse==1.2.1
+gevent==0.13.8
+gevent-socketio==0.3.5-rc2
+gevent-websocket==0.3.6
+greenlet==0.4.0
+httplib2==0.7.7
+oauth2==1.5.211
+twitter==1.9.1
+wsgiref==0.1.2

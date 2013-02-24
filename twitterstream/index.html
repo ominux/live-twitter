@@ -1,0 +1,159 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <title>Google Maps JavaScript API v3 Live Twitter</title>    
+    <style>
+      #map-canvas {
+        width: 1200px;
+        height: 500px;
+      }
+      
+      .labels {
+           color: red;
+           background-color: white;
+           font-family: "Lucida Grande", "Arial", sans-serif;
+           font-size: 10px;
+           font-weight: bold;
+           text-align: center;
+           width: 60px;     
+           border: 2px solid black;
+           white-space: nowrap;
+         }
+    </style>
+
+    <script src="https://maps.googleapis.com/maps/api/js?v=3.exp&sensor=false"></script>
+    <script>
+      var map;
+      var markers = [];
+
+      function initialize() {
+        var haightAshbury = new google.maps.LatLng(37.7699298, -122.4469157);
+        var mapOptions = {
+          zoom: 2,
+          center: haightAshbury,
+          mapTypeId: google.maps.MapTypeId.TERRAIN
+        };
+        map = new google.maps.Map(document.getElementById('map-canvas'),
+            mapOptions);
+
+      }
+
+      // Add a marker to the map and push to the array.
+      function addMarker(location, label) {
+      
+      marker = new MarkerWithLabel({
+           position: location,
+           draggable: false,
+           map: map,
+           labelContent: label,
+           labelAnchor: new google.maps.Point(22, 0),
+           labelClass: "labels", // the CSS class for the label
+           labelStyle: {opacity: 0.75}
+         });
+      
+      
+        markers.push(marker);
+      }
+
+      // Sets the map on all markers in the array.
+      function setAllMap(map) {
+        for (var i = 0; i < markers.length; i++) {
+          markers[i].setMap(map);
+        }
+      }
+
+      // Removes the overlays from the map, but keeps them in the array.
+      function clearOverlays() {
+        setAllMap(null);
+      }
+      
+ 
+
+
+      // Shows any overlays currently in the array.
+      function showOverlays() {
+        setAllMap(map);
+      }
+
+      // Deletes all markers in the array by removing references to them.
+      function deleteOverlays() {
+        clearOverlays();
+        markers = [];
+      }
+      
+      function add_it(x, y, label){
+      ll = new google.maps.LatLng(x, y)
+          addMarker(ll, label);
+      }
+
+      google.maps.event.addDomListener(window, 'load', initialize);
+    </script>
+   
+  
+  
+    <link href="static/css/style.css" rel="stylesheet">
+    <script type="text/javascript" src="static/jquery-1.9.1.js"></script>
+    
+    <script type="text/javascript" src="static/markerwithlabel.js"></script>
+
+
+
+    <script type="text/javascript" src="static/socket.io.js"></script>
+
+
+
+
+    <script>
+$(function() {
+
+WEB_SOCKET_DEBUG = true;
+
+// Socket.io specific code
+var socket = io.connect('/tweets');
+var i = 0;
+
+// Each time we get a new tweet, add it to our list
+socket.on('tweet', function(data) {
+    if (!data.text) {
+        return;
+    }
+    
+    add_it(data.coord_x,data.coord_y, data.user.screen_name)
+    
+    $('#tweets').prepend(format_html(data));
+    
+    ++i;
+    
+    if (i>10){
+          if (markers) {
+             markers[i-10].setMap(null);
+            
+          }
+    }
+    
+    
+    
+});
+
+function format_html(data) {
+    return '<p>' + 
+      data.text + 
+      ' &mdash;<a href="http://twitter.com/' + data.user.screen_name + '">' + data.user.screen_name + '</a>' +
+    '</p>';
+};
+
+});
+  </script>
+
+
+  </head>
+
+<body onload="initialize()">
+  <div id="map-canvas"></div>
+
+    
+  <h1>Live twitter stream for food</h1>
+
+  <div id="tweets"></div>
+</body>
+</html>
