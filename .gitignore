@@ -1,12 +1,5 @@
 *.egg-info
-kart/settings/local.py
-kart/settings/private.py
-kart/settings/local/*
-kart/uploads/*
-kart/logs/*
-kart/wlogs/*
-project_name/settings/private.py
-project_name/settings/local.py
+private.py
 no_upload/*
 fixtures/*
 
@@ -24,6 +17,8 @@ docs/_build
 *.pyc
 *.py~
 *.rst~
+*.md~
+
 
 # Packages #
 ############

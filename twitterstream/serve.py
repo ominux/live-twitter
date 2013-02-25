@@ -1,3 +1,39 @@
+"""
+live twitter v 0.1
+Display live tweets on google map
+
+written by Erasmose  Feb 2013
+https://github.com/erasmose/
+
+Part of code based on Twitter example of gevent-socketio
+
+You need to make a private.py and put your Twitter app account details there. 
+In order to get Twitter app account:
+Make a twitter app online:
+Go to http://dev.twitter.com
+Sign in
+Go to username>applications
+Create a new one
+
+Example of a sample private.py:
+#---------------------------------
+
+# these tokens are necessary for user authentication
+consumer_key = "falshdOIHDsdlksnsd"
+consumer_secret = "aslkfdjHLlKSNFDlksnadlLLFNS"
+access_key = "islhdals-asedlfhsLLSFDIHWLFLSKDNLSDHFLS"
+access_secret = "aehfialhdfOIFDHSLWSHDLSHdhLSDHSLDHSLHDHDLSHDLSH"
+
+# These are keywords to search for in the tweets:
+track = "oscar,oscars,awards,academyawards"
+
+# the port of this server:
+port = 8080
+#---------------------------------
+"""
+from private import port, track, consumer_key,consumer_secret,access_key,access_secret
+
+
 from gevent import monkey; monkey.patch_all()
 import gevent
 #import tweetstream
@@ -10,11 +46,6 @@ from socketio.namespace import BaseNamespace
 
 from twitter import *
 
-# these tokens are necessary for user authentication
-consumer_key = ""
-consumer_secret = ""
-access_key = ""
-access_secret = ""
 
 
 
@@ -42,7 +73,7 @@ def send_tweets(server):
     # iterate over tweets matching this filter text
     # IMPORTANT! this is not quite the same as a standard twitter search
     #  - see https://dev.twitter.com/docs/streaming-api
-    tweet_iter = stream.statuses.filter(track = "food")
+    tweet_iter = stream.statuses.filter(track = track)
 
 
     for tweet in tweet_iter:
@@ -106,7 +137,11 @@ def not_found(start_response):
 
 if __name__ == '__main__':
 
-    print 'Listening on port http://0.0.0.0:8080 and on port 10843 (flash policy server)'
+    print 'Listening on port http://0.0.0.0:%s' % port
+    print "press Ctrl+c to stop the server\n"
+    print "if it is not showing anything and no error is displayed,\nthen nobody is tweeting about what you are searching for."
+    print "give it some time or change your search subject(s) that are in private.py in track string"
+    
     server = SocketIOServer(('0.0.0.0', 8080), Application(),
         resource="socket.io", policy_server=True,
         policy_listener=('0.0.0.0', 10843))
