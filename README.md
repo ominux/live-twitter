@@ -1,6 +1,8 @@
 ##Live Twitter - live stream of food tweet on google map
 
-![Alt text](twitter-live-screenshot.jpg "Screenshot")
+![Alt text](twitter-live-screenshot.jpg "Live Tweets on google map")
+
+==============
 
 This is an experiment with twitter live stream. 
 
