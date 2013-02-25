@@ -1,4 +1,6 @@
-##Twitter Test - Live stream of food and its location on google map
+##Live Twitter - live stream of food tweet on google map
+
+![Alt text](twitter-live-screenshot.jpg "Screenshot")
 
 This is an experiment with twitter live stream. 
 
