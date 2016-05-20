@@ -3,7 +3,7 @@
 ![Alt text](twitter-live-screenshot.jpg "Live Tweets on google map")
 
 
-* [Live Oscars Tweets recorded](http://cgtal.com/eras/live-twitter/live-twitter-oscars2.mp4) Feb 24 2013
+* [Live Oscars Tweets recorded](live-twitter.mp4) Feb 24 2013
 
 ==============
 
